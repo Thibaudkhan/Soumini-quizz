@@ -520,8 +520,8 @@ function quickTest() {
     // Pré-remplir les réponses avec des valeurs fictives pour chaque question
     for (let i = 0; i < questions.length; i++) {
         userResponses[i] = {
-            q1: Math.floor(Math.random() * 11) - 5, // Génère des réponses entre -5 et 5
-            q2: Math.floor(Math.random() * 11) - 5  // Génère des réponses entre -5 et 5
+            q1: Math.floor(Math.random() * 11) ,
+            q2: Math.floor(Math.random() * 11)
         };
     }
 
@@ -633,7 +633,7 @@ function storeResponse() {
     if (q1Value && q2Value) {
         userResponses[currentIndex] = {
             q1: parseInt(q1Value.value),
-            q2: -parseInt(q2Value.value) // Inverser la valeur pour la question "négative"
+            q2: parseInt(q2Value.value) // Inverser la valeur pour la question "négative"
         };
     }
 }
