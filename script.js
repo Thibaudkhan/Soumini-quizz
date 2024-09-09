@@ -45,7 +45,7 @@ const questions = [
     {
         axe: "Aventure vs Sécurité",
         q1: "Je préfère explorer l'inconnu plutôt que rester dans un environnement sécurisé.",
-        q2: "Je me sens plus à l'aise dans un cadre familier et sécurisé plutôt que d'aventurer dans l'inconnu."
+        q2: "Je me sens plus à l'aise dans un cadre familier et sécurisé plutôt que de m'aventurer dans l'inconnu."
     }
 ];
 
@@ -455,25 +455,27 @@ function updateQuestions() {
     const axeTitle = document.getElementById("axe-title");
     const question1 = document.getElementById("question1");
     const question2 = document.getElementById("question2");
+    const questionCounter = document.getElementById("question-counter");
 
+    // Mettre à jour le titre et les questions
     axeTitle.innerText = questions[currentIndex].axe;
     question1.innerText = questions[currentIndex].q1;
     question2.innerText = questions[currentIndex].q2;
+    questionCounter.innerText = `(${currentIndex + 1}/${questions.length})`;
 
     // Restaurer les réponses précédentes si elles existent
     if (userResponses[currentIndex]) {
         document.querySelector(`input[name="q1"][value="${userResponses[currentIndex].q1}"]`).checked = true;
         document.querySelector(`input[name="q2"][value="${userResponses[currentIndex].q2}"]`).checked = true;
     } else {
-        // Si aucune réponse n'est sélectionnée, réinitialiser
         document.querySelectorAll('input[name="q1"]').forEach(input => input.checked = false);
         document.querySelectorAll('input[name="q2"]').forEach(input => input.checked = false);
     }
 
+    // Gérer l'affichage des boutons "Précédent", "Suivant" et "Terminer"
     document.getElementById("prev-btn").disabled = currentIndex === 0;
-    document.getElementById("next-btn").disabled = currentIndex === questions.length - 1;
 
-    // Masquer le bouton "Terminer" si on n'est pas à la dernière question
+    // Si l'utilisateur est sur la dernière question, cacher "Suivant" et montrer "Terminer"
     if (currentIndex === questions.length - 1) {
         document.getElementById("next-btn").style.display = "none";
         document.getElementById("finish-btn").style.display = "inline-block";
@@ -483,63 +485,134 @@ function updateQuestions() {
     }
 }
 
-// function next() {
-//     if (currentIndex < questions.length - 1) {
-//         storeResponse();  // Stocker les réponses actuelles
-//         currentIndex++;
-//         updateQuestions();
-//     } else {
-//         // Calculer les résultats à la fin du test
-//         storeResponse();  // Stocker la dernière réponse
-//         const finalScores = calculateFinalScore();
-//         console.log(finalScores);  // Afficher les scores finaux (ou faire autre chose)
-//         displayResults(finalScores);  // Tu peux écrire une fonction pour afficher les résultats
-//     }
-// }
 
 function next() {
+    console.log("currentIndex");
+    console.log(currentIndex);
+    console.log(questions.length);
     if (currentIndex < questions.length - 1) {
         storeResponse();  // Stocker les réponses actuelles
         currentIndex++;
-        updateQuestions();
-    } else {
-        // Afficher le bouton "Terminer" et cacher "Suivant"
-        document.getElementById("next-btn").style.display = "none";
-        document.getElementById("finish-btn").style.display = "inline-block";
+        updateQuestions();  // Mettre à jour les questions et les boutons
     }
+    // else {
+    //     // Afficher le bouton "Terminer" et cacher "Suivant"
+    //     document.getElementById("next-btn").style.display = "none";
+    //     document.getElementById("finish-btn").style.display = "inline-block";
+    // }
 }
 
 function finishTest() {
     storeResponse();  // Stocker la dernière réponse
     const finalScores = calculateFinalScore();  // Calculer les scores
-    const top5Subraces = compareWithSubraces(finalScores);  // Obtenir les 5 sous-races les plus proches
 
-    // Afficher les résultats stylisés
-    displayResults(top5Subraces, finalScores);
+    // Calculer les 5 sous-races avec la différence minimale
+    const top5ByDifference = compareWithSubraces(finalScores);
+
+    // Calculer les 5 sous-races avec les gros points en commun
+    const top5ByHighSimilarity = compareByHighSimilarity(finalScores);
+
+    // Afficher les deux types de résultats
+    displayResults(top5ByDifference, top5ByHighSimilarity, finalScores);
 }
 
+function quickTest() {
+    // Pré-remplir les réponses avec des valeurs fictives pour chaque question
+    for (let i = 0; i < questions.length; i++) {
+        userResponses[i] = {
+            q1: Math.floor(Math.random() * 11) - 5, // Génère des réponses entre -5 et 5
+            q2: Math.floor(Math.random() * 11) - 5  // Génère des réponses entre -5 et 5
+        };
+    }
 
-function displayResults(top5Subraces, finalScores) {
-    const resultsContainer = document.getElementById('results-container');
-    resultsContainer.style.display = "block";
-    resultsContainer.innerHTML = "<h3>Les 5 sous-races les plus proches :</h3>";
+    // Calculer les scores avec les réponses pré-remplies
+    const finalScores = calculateFinalScore();
 
-    // Afficher les 5 sous-races les plus proches
-    top5Subraces.forEach((result, index) => {
-        resultsContainer.innerHTML += `
-            <div class="subrace-result">
-                <p>${index + 1}. <span>${result.subrace}</span> (Différence totale : <span class="difference">${result.difference}</span>)</p>
-            </div>
+    // Calculer les 5 sous-races avec la différence minimale
+    const top5ByDifference = compareWithSubraces(finalScores);
+
+    // Calculer les 5 sous-races avec les gros points en commun
+    const top5ByHighSimilarity = compareByHighSimilarity(finalScores);
+
+    // Afficher les résultats pré-remplis
+    displayResults(top5ByDifference, top5ByHighSimilarity, finalScores);
+}
+
+function refreshPage() {
+    window.location.reload();  // Recharger la page actuelle
+}
+
+function displayResults(topSubraces, topByHighSimilarity, finalScores) {
+    const closestTableBody = document.querySelector('#closest-subraces-table tbody');
+    const similarTableBody = document.querySelector('#similar-subraces-table tbody');
+    const finalScoresTableHead = document.querySelector('#final-scores-table thead tr');
+    const finalScoresTableBody = document.querySelector('#final-scores-table tbody tr');
+
+    // Vider les tableaux avant d'ajouter de nouveaux résultats
+    closestTableBody.innerHTML = '';
+    similarTableBody.innerHTML = '';
+    finalScoresTableHead.innerHTML = '';
+    finalScoresTableBody.innerHTML = '';
+
+    // Remplir le tableau des sous-races les plus proches avec un classement continu
+    let position = 1;
+    let displayedPosition = 0;
+
+    topSubraces.forEach((result, index) => {
+        const row = document.createElement('tr');
+        if (index === 0 || result.difference !== topSubraces[index - 1].difference) {
+            displayedPosition++;
+        }
+
+        row.innerHTML = `
+            <td>${displayedPosition}</td>
+            <td>${result.subrace}</td>
+            <td>${result.difference}</td>
         `;
+        closestTableBody.appendChild(row);
+        position++;
     });
 
-    // Afficher les scores finaux pour chaque axe
-    resultsContainer.innerHTML += "<h3>Vos scores finaux :</h3>";
-    for (const axe in finalScores) {
-        resultsContainer.innerHTML += `<p>${axe}: <span class="score">${finalScores[axe]}</span></p>`;
-    }
-}
+    // Remplir le tableau des sous-races avec les plus gros points communs avec un classement continu
+    position = 1;
+    displayedPosition = 0;
 
+    topByHighSimilarity.forEach((result, index) => {
+        const row = document.createElement('tr');
+        if (index === 0 || result.commonScore !== topByHighSimilarity[index - 1].commonScore) {
+            displayedPosition++;
+        }
+
+        row.innerHTML = `
+            <td>${displayedPosition}</td>
+            <td>${result.subrace}</td>
+            <td>${result.commonScore}</td>
+        `;
+        similarTableBody.appendChild(row);
+        position++;
+    });
+
+    // Afficher les scores finaux dans un tableau avec les en-têtes des axes
+    const axes = Object.keys(finalScores);  // Récupérer les noms des axes
+    axes.forEach((axe) => {
+        // Ajouter les en-têtes des axes
+        const th = document.createElement('th');
+        th.innerText = axe;
+        finalScoresTableHead.appendChild(th);
+
+        // Ajouter les scores finaux
+        const td = document.createElement('td');
+        td.innerText = finalScores[axe];
+        finalScoresTableBody.appendChild(td);
+    });
+
+    // Afficher les résultats
+    const resultsContainer = document.getElementById('results-container');
+    resultsContainer.style.display = 'block';
+
+    const finalScoresContainer = document.getElementById('final-scores-container');
+    finalScoresContainer.style.display = 'block';
+}
 
 function previous() {
     if (currentIndex > 0) {
@@ -588,8 +661,36 @@ function calculateFinalScore() {
 }
 
 
+function compareByHighSimilarity(finalScores) {
+    let subracesCommonPoints = [];
+
+    for (const subrace in subracesProfiles) {
+        let commonScore = 0;
+
+        for (const axe in finalScores) {
+            const userScore = finalScores[axe];
+            const subraceScore = subracesProfiles[subrace][axe];
+            const difference = Math.abs(userScore - subraceScore);
+
+            // Si la différence entre les scores est de 2 ou moins
+            if (difference <= 2) {
+                commonScore += 1;  // Ajouter des points si les scores sont similaires (à 2 près)
+            }
+        }
+
+        // Ajouter la sous-race avec son score de similarité élevé
+        subracesCommonPoints.push({ subrace: subrace, commonScore: commonScore });
+    }
+
+    // Trier les sous-races par score de similarité élevé (plus le commonScore est élevé, mieux c'est)
+    subracesCommonPoints.sort((a, b) => b.commonScore - a.commonScore);
+
+    return subracesCommonPoints;  // Retourner toutes les sous-races
+}
+
+
+
 function compareWithSubraces(finalScores) {
-    // Exemple de sous-races avec leurs profils (valeurs des axes que tu as définis)
     let subracesDifferences = [];
 
     for (const subrace in subracesProfiles) {
@@ -599,15 +700,15 @@ function compareWithSubraces(finalScores) {
         }
 
         // Ajouter la sous-race et sa différence totale au tableau
-        subracesDifferences.push({subrace: subrace, difference: totalDifference});
+        subracesDifferences.push({ subrace: subrace, difference: totalDifference });
     }
 
     // Trier les sous-races par différence totale (de la plus petite à la plus grande)
     subracesDifferences.sort((a, b) => a.difference - b.difference);
 
-    // Retourner les 5 premières sous-races
-    return subracesDifferences.slice(0, 5);
+    return subracesDifferences;  // Retourner toutes les sous-races
 }
+
 
 // Initial setup
 updateQuestions();
