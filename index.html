@@ -16,30 +16,102 @@
         }
 
         .container {
-            width: 500px;
+            width: 700px;
             background-color: white;
             padding: 30px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-        }
-
-        .question-block {
-            margin-bottom: 20px;
+            border-radius: 10px;
         }
 
         .question {
-            margin-bottom: 10px;
-            font-size: 1.2em;
+            margin-bottom: 30px;
+            font-size: 1.4em;
+            color: #333;
         }
 
         .choices {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 20px;
+            align-items: center;
+            margin-bottom: 30px;
         }
 
         .choices label {
             font-size: 0.9em;
+        }
+
+        .scale {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .scale label {
+            cursor: pointer;
+        }
+
+        .scale input[type="radio"] {
+            display: none;
+        }
+
+        .scale label span {
+            display: inline-block;
+            border-radius: 50%;
+            background-color: transparent;
+            border: 2px solid #ccc;
+            width: 20px;
+            height: 20px;
+            transition: background-color 0.3s, border-color 0.3s, transform 0.3s;
+        }
+
+        .scale input[type="radio"]:checked + span {
+            background-color: #3498db;
+            border-color: #3498db;
+            transform: scale(1.2);
+        }
+
+        .scale label:first-child span {
+            width: 28px;
+            height: 28px;
+        }
+
+        .scale label:nth-child(2) span {
+            width: 24px;
+            height: 24px;
+        }
+
+        .scale label:nth-child(3) span {
+            width: 20px;
+            height: 20px;
+        }
+
+        .scale label:nth-child(4) span {
+            width: 16px;
+            height: 16px;
+        }
+
+        .scale label:nth-child(5) span {
+            width: 20px;
+            height: 20px;
+        }
+
+        .scale label:nth-child(6) span {
+            width: 24px;
+            height: 24px;
+        }
+
+        .scale label:last-child span {
+            width: 28px;
+            height: 28px;
+        }
+
+        .scale-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            color: #555;
         }
 
         .nav-buttons {
@@ -68,34 +140,34 @@
 </head>
 <body>
     <div class="container">
-        <h2 id="axe-title">Ordre vs Chaos</h2>
-        <div class="question-block">
-            <div class="question" id="question1">Je préfère que tout soit bien organisé et sous contrôle.</div>
-            <div class="choices">
-                <label><input type="radio" name="q1" value="-10"> Pas du tout d'accord</label>
-                <label><input type="radio" name="q1" value="-5"> Plutôt pas d'accord</label>
-                <label><input type="radio" name="q1" value="0"> Neutre</label>
-                <label><input type="radio" name="q1" value="5"> Plutôt d'accord</label>
-                <label><input type="radio" name="q1" value="10"> Tout à fait d'accord</label>
+        <div class="question">
+            Vous vous faites fréquemment de nouveaux amis.
+        </div>
+        <div class="choices">
+            <div class="scale">
+                <label><input type="radio" name="q1" value="-10"><span></span></label>
+                <label><input type="radio" name="q1" value="-7"><span></span></label>
+                <label><input type="radio" name="q1" value="-5"><span></span></label>
+                <label><input type="radio" name="q1" value="0"><span></span></label>
+                <label><input type="radio" name="q1" value="5"><span></span></label>
+                <label><input type="radio" name="q1" value="7"><span></span></label>
+                <label><input type="radio" name="q1" value="10"><span></span></label>
             </div>
         </div>
-        
-        <div class="question-block">
-            <div class="question" id="question2">Je me sens à l'aise lorsque les situations sont imprévisibles et que tout ne suit pas forcément un plan.</div>
-            <div class="choices">
-                <label><input type="radio" name="q2" value="-10"> Pas du tout d'accord</label>
-                <label><input type="radio" name="q2" value="-5"> Plutôt pas d'accord</label>
-                <label><input type="radio" name="q2" value="0"> Neutre</label>
-                <label><input type="radio" name="q2" value="5"> Plutôt d'accord</label>
-                <label><input type="radio" name="q2" value="10"> Tout à fait d'accord</label>
-            </div>
+        <div class="scale-text">
+            <span>D'accord</span>
+            <span>En désaccord</span>
         </div>
-
         <div class="nav-buttons">
-            <button id="prev-btn" onclick="previous()">Précédent</button>
-            <button id="next-btn" onclick="next()">Suivant</button>
+            <button id="prev-btn">Précédent</button>
+            <button id="next-btn">Suivant</button>
         </div>
     </div>
+
+    <script>
+        document.getElementById("prev-btn").disabled = true;  // Initial behavior
+    </script>
+
 
     <script>
         const questions = [
