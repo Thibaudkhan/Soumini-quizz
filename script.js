@@ -612,6 +612,9 @@ function displayResults(topSubraces, topByHighSimilarity, finalScores) {
 
     const finalScoresContainer = document.getElementById('final-scores-container');
     finalScoresContainer.style.display = 'block';
+
+    createRadarChart(finalScores);
+
 }
 
 function previous() {
@@ -708,7 +711,42 @@ function compareWithSubraces(finalScores) {
 
     return subracesDifferences;  // Retourner toutes les sous-races
 }
+function createRadarChart(finalScores) {
+    const ctx = document.getElementById('personalityRadarChart').getContext('2d');
 
+    // Récupérer les axes (les en-têtes du tableau des scores)
+    const axes = Object.keys(finalScores);
+
+    // Récupérer les scores pour chaque axe
+    const scores = Object.values(finalScores);
+
+    // Créer le diagramme en toile d'araignée avec Chart.js
+    const radarChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: axes,  // Les axes (par exemple : "Ordre vs Chaos", "Esprit vs Corps", etc.)
+            datasets: [{
+                label: 'Scores de Personnalité',
+                data: scores,  // Les scores correspondants
+                backgroundColor: 'rgba(52, 152, 219, 0.2)',  // Couleur de fond de la toile
+                borderColor: 'rgba(52, 152, 219, 1)',  // Couleur de la ligne
+                pointBackgroundColor: 'rgba(52, 152, 219, 1)',  // Couleur des points
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(52, 152, 219, 1)'
+            }]
+        },
+        options: {
+            scale: {
+                ticks: {
+                    beginAtZero: true,
+                    max: 10  // Assure-toi que l'échelle correspond à tes scores (par exemple, si les scores vont de -10 à 10, ajuste ici)
+                }
+            },
+            responsive: true
+        }
+    });
+}
 
 // Initial setup
 updateQuestions();

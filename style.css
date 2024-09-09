@@ -367,7 +367,10 @@ tbody tr:hover {
 #results-container .difference {
     color: #e74c3c;
 }
+
+
 #final-scores-container {
+
     margin-top: 20px;
     padding: 10px;
     background-color: #f9f9f9;
@@ -401,4 +404,12 @@ tbody tr:hover {
 #final-scores-table tbody tr:hover {
     background-color: #347cdb;
     color: #fff;
+}
+
+
+#personalityRadarChart{
+    margin: 20px auto;
+    max-width: 400px;
+    width: 100%;
+    height: 400px;
 }
