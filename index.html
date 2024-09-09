@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Personnalité RPG</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .container {
+            width: 500px;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .question-block {
+            margin-bottom: 20px;
+        }
+
+        .question {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .choices label {
+            font-size: 0.9em;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 id="axe-title">Ordre vs Chaos</h2>
+        <div class="question-block">
+            <div class="question" id="question1">Je préfère que tout soit bien organisé et sous contrôle.</div>
+            <div class="choices">
+                <label><input type="radio" name="q1" value="-10"> Pas du tout d'accord</label>
+                <label><input type="radio" name="q1" value="-5"> Plutôt pas d'accord</label>
+                <label><input type="radio" name="q1" value="0"> Neutre</label>
+                <label><input type="radio" name="q1" value="5"> Plutôt d'accord</label>
+                <label><input type="radio" name="q1" value="10"> Tout à fait d'accord</label>
+            </div>
+        </div>
+        
+        <div class="question-block">
+            <div class="question" id="question2">Je me sens à l'aise lorsque les situations sont imprévisibles et que tout ne suit pas forcément un plan.</div>
+            <div class="choices">
+                <label><input type="radio" name="q2" value="-10"> Pas du tout d'accord</label>
+                <label><input type="radio" name="q2" value="-5"> Plutôt pas d'accord</label>
+                <label><input type="radio" name="q2" value="0"> Neutre</label>
+                <label><input type="radio" name="q2" value="5"> Plutôt d'accord</label>
+                <label><input type="radio" name="q2" value="10"> Tout à fait d'accord</label>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <button id="prev-btn" onclick="previous()">Précédent</button>
+            <button id="next-btn" onclick="next()">Suivant</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { axe: "Ordre vs Chaos", q1: "Je préfère que tout soit bien organisé et sous contrôle.", q2: "Je me sens à l'aise lorsque les situations sont imprévisibles et que tout ne suit pas forcément un plan." },
+            { axe: "Esprit vs Corps", q1: "Je me sens plus à l’aise dans un domaine intellectuel ou spirituel que dans des activités physiques.", q2: "Je préfère utiliser mon corps et agir physiquement plutôt que de réfléchir ou méditer." },
+            { axe: "Tradition vs Innovation", q1: "Je respecte les traditions et pense qu'elles doivent être conservées.", q2: "Je pense que l’innovation et le changement sont essentiels pour progresser." },
+            { axe: "Social vs Solitaire", q1: "Je me sens plus à l'aise en travaillant en groupe qu'en travaillant seul.", q2: "Je préfère travailler seul et m'appuyer sur mes propres compétences plutôt que de dépendre des autres." },
+            { axe: "Nature vs Technologie", q1: "Je me sens plus proche de la nature que de la technologie.", q2: "La technologie est essentielle à ma vie, plus que mon lien avec la nature." },
+            { axe: "Lumière vs Ténèbres", q1: "Je valorise la justice, la morale, et la lumière au-dessus de tout.", q2: "Je pense que la force ou les ténèbres sont nécessaires pour obtenir ce que l'on veut dans ce monde." },
+            { axe: "Survie vs Confort", q1: "Je suis plus concerné par ma survie que par mon confort quotidien.", q2: "Je préfère être à l’aise et en sécurité plutôt que de devoir me battre pour survivre." },
+            { axe: "Individualisme vs Collectivisme", q1: "Je préfère prendre mes décisions seul plutôt que de m'aligner avec les besoins d'un groupe.", q2: "Je pense qu’il est essentiel de prendre en compte les besoins du groupe avant ses propres désirs." },
+            { axe: "Aventure vs Sécurité", q1: "Je préfère explorer l'inconnu plutôt que rester dans un environnement sécurisé.", q2: "Je me sens plus à l'aise dans un cadre familier et sécurisé plutôt que d'aventurer dans l'inconnu." }
+        ];
+
+        let currentIndex = 0;
+
+        function updateQuestions() {
+            const axeTitle = document.getElementById("axe-title");
+            const question1 = document.getElementById("question1");
+            const question2 = document.getElementById("question2");
+
+            axeTitle.innerText = questions[currentIndex].axe;
+            question1.innerText = questions[currentIndex].q1;
+            question2.innerText = questions[currentIndex].q2;
+
+            // Reset radio buttons
+            document.querySelectorAll('input[name="q1"]').forEach(input => input.checked = false);
+            document.querySelectorAll('input[name="q2"]').forEach(input => input.checked = false);
+        }
+
+        function next() {
+            if (currentIndex < questions.length - 1) {
+                currentIndex++;
+                updateQuestions();
+            }
+        }
+
+        function previous() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateQuestions();
+            }
+        }
+
+        document.getElementById("prev-btn").disabled = currentIndex === 0;
+        document.getElementById("next-btn").disabled = currentIndex === questions.length - 1;
+
+        // Initial setup
+        updateQuestions();
+    </script>
+</body>
+</html>
