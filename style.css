@@ -36,7 +36,7 @@ body {
     font-size: 1.4em;
     font-weight: bold;
     color: #333;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 
 
@@ -194,6 +194,140 @@ button:disabled {
     cursor: not-allowed;
 }
 
+
+#refresh-btn {
+    padding: 10px 20px;
+    color: rgba(0, 0, 0, 0.3);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#refresh-btn:hover {
+    color: rgba(0, 0, 0);
+}
+#question-counter {
+    font-size: 1.2em;
+    color: #3498db;
+    font-weight: bold;
+    margin-left: 10px;
+    padding: 5px 10px;
+    display: inline-block;
+}
+.title-buttons {
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.title-buttons button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    margin-left: 10px;
+    color: #3498db;
+}
+
+.title-buttons button:hover {
+    color: #2980b9;
+}
+
+.title-buttons i {
+    font-size: 1.5em;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+h2 {
+    flex-grow: 1;
+    padding-left: 25%;
+    margin: 0;
+}
+
+.title-buttons {
+    display: flex;
+    gap: 10px;  /* Espacement entre les boutons */
+}
+
+.title-buttons button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #3498db;
+}
+
+.title-buttons button:hover {
+    color: #2980b9;
+}
+
+.title-buttons i {
+    font-size: 1.5em;
+}
+
+
+
+#results-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.result-tables {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.scrollable-table {
+    max-height: 300px;  /* Hauteur maximale pour la partie défilante */
+    overflow-y: auto;   /* Permet le défilement vertical */
+    position: relative;
+}
+
+.scrollable-table table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;  /* S'assure que le tableau garde une taille fixe */
+}
+
+.scrollable-table thead {
+    position: sticky;   /* En-têtes fixes */
+    top: 0;             /* Les garder en haut du tableau */
+    z-index: 1;         /* S'assure que l'en-tête est au-dessus des lignes du tableau */
+    background-color: #3498db;  /* Couleur de fond des en-têtes pour les différencier */
+    color: white;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #347cdb;
+    color: white;
+}
+
+/* Ajoute un ombrage au tableau pour le rendre plus visuel */
+.scrollable-table {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 #results-container {
     display: none;
     background-color: #f9f9f9;
@@ -232,4 +366,39 @@ button:disabled {
 
 #results-container .difference {
     color: #e74c3c;
+}
+#final-scores-container {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+#final-scores-table {
+    width: 100%;
+    margin-bottom: 58px;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+#final-scores-table th, #final-scores-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+#final-scores-table th {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+}
+
+#final-scores-table tbody tr {
+    background-color: #f2f2f2;
+}
+
+#final-scores-table tbody tr:hover {
+    background-color: #347cdb;
+    color: #fff;
 }
