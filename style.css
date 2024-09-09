@@ -1,0 +1,235 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-image: url('bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* Ajoute un effet sombre à l'image avec un overlay noir */
+    background-color: rgba(0, 0, 0, 0.5); /* Overlay noir avec 50% d'opacité */
+    background-blend-mode: darken; /* Mélange la couleur avec l'image pour la rendre plus sombre */
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.8); /* Arrière-plan blanc transparent pour la lisibilité */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 50px auto;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.question-block {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.question {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+
+.choices {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+
+.choices label {
+    font-size: 0.9em;
+}
+
+.scale {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.scale label {
+    cursor: pointer;
+    flex-grow: 1;
+    text-align: center;
+    position: relative;
+}
+
+.scale input[type="radio"] {
+    display: none;
+}
+
+.scale label span {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+
+.scale input[type="radio"]:checked + span {
+    background-color: #3498db;
+    border-color: #3498db;
+    transform: scale(1.2);
+}
+
+.scale label:first-child span {
+    width: 28px;
+    height: 28px;
+}
+
+.scale label:first-child input[type="radio"]:checked + span {
+    background-color: #4caf50; /* Vert clair */
+    border-color: #4caf50;
+}
+
+.scale label:nth-child(2) input[type="radio"]:checked + span {
+    background-color: #9ccc65; /* Vert moyen */
+    border-color: #9ccc65;
+}
+
+.scale label:nth-child(3) input[type="radio"]:checked + span {
+    background-color: #bdbdbd; /* Gris neutre */
+    border-color: #bdbdbd;
+}
+
+.scale label:nth-child(4) input[type="radio"]:checked + span {
+    background-color: #ef9a9a; /* Rouge clair */
+    border-color: #ef9a9a;
+}
+
+.scale label:last-child input[type="radio"]:checked + span {
+    background-color: #f44336; /* Rouge vif */
+    border-color: #f44336;
+}
+
+.scale label:nth-child(2) span {
+    width: 20px;
+    height: 20px;
+}
+
+.scale label:nth-child(3) span {
+    width: 16px;
+    height: 16px;
+}
+
+.scale label:nth-child(4) span {
+    width: 20px;
+    height: 20px;
+}
+
+
+.scale label:last-child span {
+    width: 28px;
+    height: 28px;
+}
+
+.scale-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+.scale-text span {
+    color: #555;
+}
+
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.nav-buttons button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.nav-buttons button:hover {
+    background-color: #2980b9;
+}
+
+.nav-buttons button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+#results-container {
+    display: none;
+    background-color: #f9f9f9;
+    border: 2px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#results-container h3 {
+    color: #3498db;
+}
+
+#results-container p {
+    font-size: 1.2em;
+    color: #333;
+    margin: 10px 0;
+}
+
+#results-container .subrace-result {
+    background-color: #ecf0f1;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+#results-container .subrace-result span {
+    font-weight: bold;
+}
+
+#results-container .score {
+    color: #27ae60;
+}
+
+#results-container .difference {
+    color: #e74c3c;
+}
