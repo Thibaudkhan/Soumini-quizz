@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Personnalité RPG</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="header" >
+        <h2 id="axe-title">Ordre vs Chaos </h2>
+        <div class="title-buttons">
+            <button id="refresh-btn" onclick="refreshPage()">
+                <i class="fas fa-redo"></i>
+            </button>
+            <button id="quick-test-btn" onclick="quickTest()">
+                <i class="fas fa-dice"></i>
+            </button>
+        </div>
+    </div>
+    <span id="question-counter">(1/9)</span>
+    <div class="question-block">
+        <div class="question" id="question1">Je préfère que tout soit bien organisé et sous contrôle.</div>
+        <div class="scale-text">
+            <span>D'accord</span>
+            <span>En désaccord</span>
+        </div>
+        <div class="choices">
+            <div class="scale">
+                <label><input type="radio" name="q1" value="5"><span></span></label>
+                <label><input type="radio" name="q1" value="2"><span></span></label>
+                <label><input type="radio" name="q1" value="0"><span></span></label>
+                <label><input type="radio" name="q1" value="-2"><span></span></label>
+                <label><input type="radio" name="q1" value="-5"><span></span></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="question-block">
+        <div class="question" id="question2">Je me sens à l'aise lorsque les situations sont imprévisibles et que tout
+            ne suit pas forcément un plan.
+        </div>
+        <div class="scale-text">
+            <span>D'accord</span>
+            <span>En désaccord</span>
+        </div>
+        <div class="choices">
+            <div class="scale">
+                <label><input type="radio" name="q2" value="5"><span></span></label>
+                <label><input type="radio" name="q2" value="2"><span></span></label>
+                <label><input type="radio" name="q2" value="0"><span></span></label>
+                <label><input type="radio" name="q2" value="-2"><span></span></label>
+                <label><input type="radio" name="q2" value="-5"><span></span></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <button id="prev-btn" onclick="previous()">Précédent</button>
+        <button id="next-btn" onclick="next()">Suivant</button>
+        <button id="finish-btn" style="display: none;" onclick="finishTest()">Terminer</button>
+    </div>
+</div>
+
+
+<div id="results-container">
+
+
+
+    <h3>Résultats des Sous-races</h3>
+    <div id="final-scores-container">
+        <h3>Scores finaux</h3>
+        <table id="final-scores-table">
+            <thead>
+            <tr>
+                <!-- Les en-têtes des axes -->
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <!-- Les scores finaux -->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="result-tables">
+        <!-- Tableau des sous-races les plus proches -->
+        <div class="scrollable-table">
+            <h3>Sous-races avec le score le plus proche</h3>
+
+            <table id="closest-subraces-table">
+                <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Sous-race</th>
+                    <th>Différence totale</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- Tableau des sous-races avec les points communs élevés -->
+        <div class="scrollable-table">
+            <h3>Sous-races avec le plus de points communs</h3>
+
+            <table id="similar-subraces-table">
+                <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Sous-race</th>
+                    <th>Points communs élevés</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+<!--<div id="results-container"></div>-->
+<script type="text/javascript" src="script.js"></script>
+
+</body>
+</html>
